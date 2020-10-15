@@ -1,7 +1,7 @@
 package sample;
 
-import com.gtranslate.Audio;
-import com.gtranslate.Language;
+//import com.gtranslate.Audio;
+//import com.gtranslate.Language;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import javazoom.jl.decoder.JavaLayerException;
+//import javazoom.jl.decoder.JavaLayerException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 public class Controller implements Initializable {
     @FXML
@@ -45,11 +45,11 @@ public class Controller implements Initializable {
     @FXML
     ListView<String> history;
 
-    @FXML
-    Button speakButton;
-    
-    @FXML
-    ImageView speakerIcon;
+//    @FXML
+//    Button speakButton;
+//
+//    @FXML
+//    ImageView speakerIcon;
 
     @FXML
     ListView<String> hint;
@@ -67,25 +67,25 @@ public class Controller implements Initializable {
 
     }
 
-    public void speakWord(ActionEvent event){
-        InputStream sound=null;
-        Audio audio=Audio.getInstance();
-        try {
-            sound=audio.getAudio("hello",Language.ENGLISH);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            audio.play(sound);
-        } catch (JavaLayerException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void speakWord(ActionEvent event){
+//        InputStream sound=null;
+//        Audio audio=Audio.getInstance();
+//        try {
+//            sound=audio.getAudio("hello",Language.ENGLISH);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            audio.play(sound);
+//        } catch (JavaLayerException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        speakButton.setVisible(false);
-        speakerIcon.setVisible(false);
+      //  speakButton.setVisible(false);
+        //speakerIcon.setVisible(false);
         hint.setVisible(false);
         WebEngine webEngine = meaning.getEngine();
         Map<String, String> myDictionary = new HashMap<>();
@@ -151,13 +151,13 @@ public class Controller implements Initializable {
             w = w.trim();
             if (!w.equals("")) {
                 if (!myDictionary.containsKey(w)) {
-                    speakButton.setVisible(false);
-                    speakerIcon.setVisible(false);
+                    //speakButton.setVisible(false);
+                    //speakerIcon.setVisible(false);
                     String t = "<html>NO WORD<br>add word to dictionary if you want</html>";
                     webEngine.loadContent(t);
                 } else {
-                    speakButton.setVisible(true);
-                    speakerIcon.setVisible(true);
+                    //speakButton.setVisible(true);
+                    //speakerIcon.setVisible(true);
                     webEngine.loadContent(myDictionary.get(w));
                     history.getItems().remove(w);
                     history.getItems().add(0, w);
@@ -168,8 +168,8 @@ public class Controller implements Initializable {
 
         history.setOnMouseClicked(event -> {
             hint.setVisible(false);
-            speakButton.setVisible(true);
-            speakerIcon.setVisible(true);
+            //speakButton.setVisible(true);
+           // speakerIcon.setVisible(true);
             String w = history.getSelectionModel().getSelectedItem();
             webEngine.loadContent(myDictionary.get(w));
             searchWord.setText(w);
