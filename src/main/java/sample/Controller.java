@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -192,6 +193,7 @@ public class Controller implements Initializable {
 
     public void openAddWord() throws IOException {
         st = new Stage();
+        st.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("/AddWordScene.fxml"));
         st.setTitle("Add new word");
         st.setScene(new Scene(root, 600, 400));
@@ -200,6 +202,7 @@ public class Controller implements Initializable {
 
     public void openDeleteWord() throws IOException{
         st = new Stage();
+        st.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("/DeleteWordScene.fxml"));
         st.setTitle("Delete word");
         st.setScene(new Scene(root, 600, 400));
@@ -212,6 +215,7 @@ public class Controller implements Initializable {
 
     public void openReplaceWord() throws IOException {
         st = new Stage();
+        st.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("/ReWordScene.fxml"));
         st.setTitle("Replace word");
         st.setScene(new Scene(root, 600, 400));
@@ -249,6 +253,7 @@ public class Controller implements Initializable {
 
     public void openGoogleApi() throws IOException{
         st = new Stage();
+        st.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("/ApiScene.fxml"));
         st.setTitle("Google api");
         st.setScene(new Scene(root, 600, 400));
