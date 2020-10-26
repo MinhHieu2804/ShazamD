@@ -38,6 +38,7 @@
               <MenuItem mnemonicParsing="false" onAction="#openAddWord" text="Add" />
                   <MenuItem mnemonicParsing="false" onAction="#openDeleteWord" text="Delete" />
                   <MenuItem mnemonicParsing="false" onAction="#openReplaceWord" text="Replace" />
+                  <MenuItem mnemonicParsing="false" onAction="#openGoogleApi" text="Google translate" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

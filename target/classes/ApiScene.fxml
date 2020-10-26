@@ -8,8 +8,8 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ApiController">
    <children>
-      <TextField fx:id="word" layoutX="14.0" layoutY="90.0" prefHeight="175.0" prefWidth="260.0" text="Nhap...." />
+      <TextField fx:id="word" layoutX="14.0" layoutY="90.0" onKeyTyped="#trans" prefHeight="175.0" prefWidth="260.0" />
       <WebView fx:id="target" layoutX="293.0" layoutY="90.0" prefHeight="169.0" prefWidth="280.0" />
-      <Button layoutX="24.0" layoutY="350.0" mnemonicParsing="false" style="-fx-border-radius: 12;" text="BACK" />
+      <Button layoutX="24.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#close" style="-fx-border-radius: 12;" text="BACK" />
    </children>
 </AnchorPane>
