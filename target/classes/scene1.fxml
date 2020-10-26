@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#hide_history2" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #66ccff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <children>
+        <Button fx:id="searchButton" layoutX="191.0" layoutY="44.0" mnemonicParsing="false" onMouseClicked="#search_Word" prefHeight="25.0" prefWidth="61.0" text="SEARCH" />
+        <ListView fx:id="hint" layoutX="39.0" layoutY="89.0" onMouseClicked="#hint_f" prefHeight="221.0" prefWidth="127.0" />
+        <TextField fx:id="searchWord" layoutX="39.0" layoutY="44.0" onKeyPressed="#enter_search" onKeyTyped="#hide_history" onMouseClicked="#show_history" prefHeight="25.0" prefWidth="127.0" />
+        <Label layoutX="39.0" layoutY="69.0" text="HISTORY" />
+      <WebView fx:id="meaning" layoutX="191.0" layoutY="86.0" onMouseClicked="#hide_history2" prefHeight="221.0" prefWidth="378.0" />
+<!--      //<Button fx:id="speakButton" layoutX="508.0" layoutY="101.0" mnemonicParsing="false" onAction="#speakWord" prefHeight="25.0" prefWidth="32.0">-->
+<!--         <graphic>-->
+<!--            <ImageView fx:id="speakerIcon" fitHeight="27.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">-->
+<!--               <image>-->
+<!--                  <Image url="@../../../speaker_icon.png" />-->
+<!--               </image>-->
+<!--            </ImageView>-->
+<!--         </graphic></Button>-->
+      <ListView fx:id="history" layoutX="39.0" layoutY="69.0" onMouseClicked="#history_f" prefHeight="153.0" prefWidth="127.0" />
+      <MenuBar prefHeight="25.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#openAddWord" text="Add" />
+                  <MenuItem mnemonicParsing="false" onAction="#openDeleteWord" text="Delete" />
+                  <MenuItem mnemonicParsing="false" onAction="#openReplaceWord" text="Replace" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Button fx:id="speak" layoutX="517.0" layoutY="44.0" mnemonicParsing="false" onMouseClicked="#speak_word" text="Button" />
+    </children>
+</AnchorPane>
