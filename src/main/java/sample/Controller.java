@@ -47,8 +47,10 @@ public class Controller implements Initializable {
     Button speak;
 
     static Stage st;
-    static Vector<String> allWords;
+    static ArrayList<String> allWords;
     static Vector<String> my_hint;
+    static DbController myDb;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,54 +59,13 @@ public class Controller implements Initializable {
 
 
     public void InitAll(){
+        myDb=new DbController();
         history.setVisible(false);
         myDictionary = new HashMap<>();
-        allWords =new Vector<>();
+        allWords =new ArrayList<>();
         my_hint=new Vector<>();
-        readTxt();
+        allWords=myDb.getAllWords();
         hint.getItems().addAll(allWords);
-    }
-
-    public void readTxt(){
-        //read txt;
-        FileInputStream inputStream = null;
-        Scanner sc = null;
-        try {
-            inputStream = new FileInputStream("E_V.txt");
-            sc = new Scanner(inputStream, "UTF-8");
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                int i = 0;
-                String tmp;
-                tmp = "";
-                for (String w : line.split("<", 2)) {
-                    if (i == 0) {
-                        tmp = w;
-                        allWords.add(w);
-                        i++;
-                    } else {
-
-                        myDictionary.put(tmp, '<' + w);
-                    }
-                }
-            }
-            if (sc.ioException() != null) {
-                throw sc.ioException();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (sc != null) {
-                sc.close();
-            }
-        }
     }
 
     public void search_Word(){
@@ -114,11 +75,11 @@ public class Controller implements Initializable {
         w = w.toLowerCase();
         w = w.trim();
         if (!w.equals("")) {
-            if (!myDictionary.containsKey(w)) {
+            if (!allWords.contains(w)) {
                 String t = "<html>NO WORD<br>add word to the dictionary if you want</html>";
                 webEngine.loadContent(t);
             } else {
-                webEngine.loadContent(myDictionary.get(w));
+                webEngine.loadContent(myDb.searchWord(w));
                 history.getItems().remove(w);
                 history.getItems().add(0, w);
             }
@@ -126,10 +87,8 @@ public class Controller implements Initializable {
     }
 
     public void show_history(){
-        delete_handel();
         if(!history.getItems().isEmpty())
         history.setVisible(true);
-      //  history.getSelectionModel().sel;
     }
 
     public void hide_history(){
@@ -153,7 +112,7 @@ public class Controller implements Initializable {
     public void history_f(){
         WebEngine webEngine = meaning.getEngine();
         String w = history.getSelectionModel().getSelectedItem();
-        webEngine.loadContent(myDictionary.get(w));
+        webEngine.loadContent(myDb.searchWord(w));
         searchWord.setText(w);
         history.getItems().remove(w);
         history.getItems().add(0, w);
@@ -164,7 +123,7 @@ public class Controller implements Initializable {
         WebEngine webEngine = meaning.getEngine();
         history.setVisible(false);
         String w = hint.getSelectionModel().getSelectedItem();
-        webEngine.loadContent(myDictionary.get(w));
+        webEngine.loadContent(myDb.searchWord(w));
         searchWord.setText(w);
         history.getItems().remove(w);
         history.getItems().add(0, w);
@@ -207,10 +166,6 @@ public class Controller implements Initializable {
         st.setTitle("Delete word");
         st.setScene(new Scene(root, 600, 400));
         st.show();
-    }
-
-    public void delete_handel(){
-        history.getItems().remove(DeleteWordSceneController.deleteW);
     }
 
     public void openReplaceWord() throws IOException {

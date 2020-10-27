@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.web.WebView?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ApiController">
    <children>
       <TextField fx:id="word" layoutX="14.0" layoutY="90.0" onKeyTyped="#trans" prefHeight="175.0" prefWidth="260.0" />
