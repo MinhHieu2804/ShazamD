@@ -109,25 +109,30 @@ public class Controller implements Initializable {
 
     public void history_f(){
         WebEngine webEngine = meaning.getEngine();
-        String w = history.getSelectionModel().getSelectedItem();
-        searchWord.setText(w);
-        history.getItems().remove(w);
-        history.getItems().add(0, w);
-        w= myDb.searchWord(w.toUpperCase());
-        webEngine.loadContent(w);
-        history.setVisible(false);
+        if(!history.getSelectionModel().isEmpty()){
+            String w = history.getSelectionModel().getSelectedItem();
+            searchWord.setText(w);
+            history.getItems().remove(w);
+            history.getItems().add(0, w);
+            w= myDb.searchWord(w.toUpperCase());
+            webEngine.loadContent(w);
+            history.scrollTo(0);
+            history.getSelectionModel().clearSelection();
+            history.setVisible(false);
+        }
     }
 
     public void hint_f(){
         WebEngine webEngine = meaning.getEngine();
         history.setVisible(false);
-        String w = hint.getSelectionModel().getSelectedItem();
-        searchWord.setText(w);
-        history.getItems().remove(w);
-        history.getItems().add(0, w);
-        w= myDb.searchWord(w);
-        webEngine.loadContent(w);
-
+        if(!hint.getSelectionModel().isEmpty()){
+            String w = hint.getSelectionModel().getSelectedItem();
+            searchWord.setText(w);
+            history.getItems().remove(w);
+            history.getItems().add(0, w);
+            w= myDb.searchWord(w);
+            webEngine.loadContent(w);
+        }
     }
 
     public void show_hint(){
