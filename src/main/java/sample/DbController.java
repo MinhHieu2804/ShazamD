@@ -12,11 +12,38 @@ public class DbController {
         Connection conn =DbConnection.getConnection();
         try {
             Statement st= conn.createStatement();
-            ResultSet rs=st.executeQuery("SELECT DISTINCT word FROM 'av' ORDER BY word ");//ASC
+            ResultSet rs=st.executeQuery("SELECT word FROM 'av' ORDER BY word ");//ASC
             while(rs.next()){
                 String e=rs.getString(1);
                 myList.add(e);
             }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return myList;
+    }
+
+    public ArrayList<String> gethint(String key){
+        ArrayList<String> myList =new ArrayList<>();
+        Connection conn =DbConnection.getConnection();
+        try {
+            Statement st= conn.createStatement();
+            ResultSet rs=st.executeQuery("SELECT DISTINCT word FROM 'av' " +
+                    "WHERE UPPER(word) LIKE \'"+key+"\'");//ASC
+            while(rs.next()){
+                String e=rs.getString(1);
+                myList.add(e);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            conn.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -92,13 +119,6 @@ public class DbController {
     }
 
     public void replaceWord(String a,String b){
-//        Connection conn =DbConnection.getConnection();
-//        try {
-//            Statement st=conn.createStatement();
-//            st.execute("UPDATE 'av' SET word=\'"+a+"\',html=\'"+b+"\' WHERE UPPER(word)=\'"+a.toUpperCase()+"\'");
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
         deleteWord(a);
         addWord(a,b);
     }

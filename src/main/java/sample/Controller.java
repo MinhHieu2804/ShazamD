@@ -46,7 +46,7 @@ public class Controller implements Initializable {
 
     static Stage st;
     static ArrayList<String> allWords;
-    static Vector<String> my_hint;
+    static ArrayList<String> my_hint;
     static DbController myDb;
 
 
@@ -59,9 +59,10 @@ public class Controller implements Initializable {
         history.setVisible(false);
         myDb=new DbController();
         allWords =new ArrayList<>();
-        my_hint=new Vector<>();
+        my_hint=new ArrayList<>();
         allWords=myDb.getAllWords();
         hint.getItems().addAll(allWords);
+
     }
 
     public void search_Word(){
@@ -69,7 +70,7 @@ public class Controller implements Initializable {
         WebEngine webEngine = meaning.getEngine();
         String w = searchWord.getText();
         if (!w.equals("")) {
-            String tmp=myDb.searchWord(w.toUpperCase());
+            String tmp=myDb.searchWord(w);
             webEngine.loadContent(tmp);
             if(!tmp.equals("<html>NO WORD<br>add word to the dictionary if you want</html>")){
                 history.getItems().remove(w);
@@ -141,47 +142,20 @@ public class Controller implements Initializable {
             hint.getItems().clear();
             hint.getItems().addAll(allWords);
         }
-        my_hint=new Vector<>();
-        int i=0;
-        while(i<allWords.size()){
-            String t=allWords.get(i);
-            if(t.startsWith(searchWord.getText())
-               || t.startsWith(searchWord.getText().toLowerCase())
-                || t.startsWith(searchWord.getText().toUpperCase())){
-                my_hint.add(t);
+        my_hint=new ArrayList<>();
+        String t=searchWord.getText().toUpperCase();
+        my_hint=myDb.gethint(t+"%");
+        if(my_hint.isEmpty()){
+            String w=searchWord.getText().toUpperCase();
+            int n=w.length();
+            String key="";
+            for(int v=0;v<n;v++){
+                key=key+w.charAt(v)+'%';
             }
-            i++;
+            my_hint=myDb.gethint(key);
         }
-        hint.getItems().clear();
-        hint.getItems().addAll(my_hint);
-
-    }
-
-    public void openAddWord() throws IOException {
-        st = new Stage();
-        st.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLLoader.load(getClass().getResource("/AddWordScene.fxml"));
-        st.setTitle("Add new word");
-        st.setScene(new Scene(root, 600, 400));
-        st.show();
-    }
-
-    public void openDeleteWord() throws IOException{
-        st = new Stage();
-        st.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLLoader.load(getClass().getResource("/DeleteWordScene.fxml"));
-        st.setTitle("Delete word");
-        st.setScene(new Scene(root, 600, 400));
-        st.show();
-    }
-
-    public void openReplaceWord() throws IOException {
-        st = new Stage();
-        st.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLLoader.load(getClass().getResource("/ReWordScene.fxml"));
-        st.setTitle("Replace word");
-        st.setScene(new Scene(root, 600, 400));
-        st.show();
+            hint.getItems().clear();
+            hint.getItems().addAll(my_hint);
     }
 
     public void speak_word() throws Exception {
@@ -211,6 +185,33 @@ public class Controller implements Initializable {
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void openAddWord() throws IOException {
+        st = new Stage();
+        st.initModality(Modality.APPLICATION_MODAL);
+        Parent root = FXMLLoader.load(getClass().getResource("/AddWordScene.fxml"));
+        st.setTitle("Add new word");
+        st.setScene(new Scene(root, 600, 400));
+        st.show();
+    }
+
+    public void openDeleteWord() throws IOException{
+        st = new Stage();
+        st.initModality(Modality.APPLICATION_MODAL);
+        Parent root = FXMLLoader.load(getClass().getResource("/DeleteWordScene.fxml"));
+        st.setTitle("Delete word");
+        st.setScene(new Scene(root, 600, 400));
+        st.show();
+    }
+
+    public void openReplaceWord() throws IOException {
+        st = new Stage();
+        st.initModality(Modality.APPLICATION_MODAL);
+        Parent root = FXMLLoader.load(getClass().getResource("/ReWordScene.fxml"));
+        st.setTitle("Replace word");
+        st.setScene(new Scene(root, 600, 400));
+        st.show();
     }
 
     public void openGoogleApi() throws IOException{
