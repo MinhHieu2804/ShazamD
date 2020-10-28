@@ -62,7 +62,6 @@ public class Controller implements Initializable {
         my_hint=new ArrayList<>();
         allWords=myDb.getAllWords();
         hint.getItems().addAll(allWords);
-
     }
 
     public void search_Word(){

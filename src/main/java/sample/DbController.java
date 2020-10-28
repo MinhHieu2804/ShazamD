@@ -12,7 +12,7 @@ public class DbController {
         Connection conn =DbConnection.getConnection();
         try {
             Statement st= conn.createStatement();
-            ResultSet rs=st.executeQuery("SELECT word FROM 'av' ORDER BY word ");//ASC
+            ResultSet rs=st.executeQuery("SELECT word FROM 'av' ORDER BY word");//ASC
             while(rs.next()){
                 String e=rs.getString(1);
                 myList.add(e);
@@ -34,7 +34,7 @@ public class DbController {
         try {
             Statement st= conn.createStatement();
             ResultSet rs=st.executeQuery("SELECT DISTINCT word FROM 'av' " +
-                    "WHERE UPPER(word) LIKE \'"+key+"\'");//ASC
+                    "WHERE UPPER(word) LIKE \""+key+"\"");//ASC
             while(rs.next()){
                 String e=rs.getString(1);
                 myList.add(e);
@@ -60,9 +60,17 @@ public class DbController {
             throwables.printStackTrace();
         }
         try {
-            ResultSet rs=st.executeQuery("SELECT * FROM 'av' WHERE UPPER(word)=\""+w.toUpperCase()+"\" LIMIT 1");
+            if(!w.toUpperCase().equals("WORD")){
+                ResultSet rs=st.executeQuery("SELECT html FROM 'av' WHERE UPPER(word)=\""+w.toUpperCase()+"\" LIMIT 1");
+                if(rs.next()){
+                    tmp=rs.getString(1);
+                    conn.close();
+                    return tmp;
+                }
+            }
+            ResultSet rs=st.executeQuery("SELECT html FROM 'av' WHERE UPPER(word)=\'"+w.toUpperCase()+"\' LIMIT 1");
             if(rs.next()){
-                tmp=rs.getString(3);
+                tmp=rs.getString(1);
                 conn.close();
                 return tmp;
             }
@@ -78,6 +86,13 @@ public class DbController {
     }
 
     public boolean has(String w){
+        if(w.toUpperCase().equals("DESCRIPTION")
+            || w.toUpperCase().equals("ID")
+                || w.toUpperCase().equals("WORD")
+                || w.toUpperCase().equals("HTML")
+                || w.toUpperCase().equals("PRONOUNCE")){
+            return true;
+        }
         Connection conn =DbConnection.getConnection();
         String tmp="";
         Statement st= null;
@@ -87,7 +102,7 @@ public class DbController {
             throwables.printStackTrace();
         }
         try {
-            ResultSet rs=st.executeQuery("SELECT * FROM 'av' WHERE UPPER(word)=\""+w.toUpperCase()+"\" LIMIT 1");
+            ResultSet rs=st.executeQuery("SELECT word FROM 'av' WHERE UPPER(word)=\'"+w.toUpperCase()+"\' LIMIT 1");
             if(rs.next()){
                 conn.close();
                 return true;
