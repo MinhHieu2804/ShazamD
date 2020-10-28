@@ -18,17 +18,18 @@ public class ReWordController {
 
 
     public void replaceWord(){
+        String t=word.getText();
         if(word.getText().equals("")){
             show_mess(0);
         }
         else if(meaning.getText().equals("")){
             show_mess(3);
         }
-        else if(!Controller.myDictionary.containsKey(word.getText())){
+        else if(!Controller.myDb.has(t)){
             show_mess(1);
         }
         else{
-            Controller.myDictionary.put(word.getText(),meaning.getText());
+            Controller.myDb.replaceWord(word.getText(),meaning.getText());
             show_mess(2);
         }
         meaning.clear();

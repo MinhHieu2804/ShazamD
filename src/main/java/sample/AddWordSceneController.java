@@ -8,6 +8,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import java.util.ArrayList;
+
 public class AddWordSceneController {
     @FXML
     private TextField addWord_word;
@@ -25,9 +27,10 @@ public class AddWordSceneController {
         else if(addWord_meaning.getText().equals("")){
             show_mess(3);
         }
-        else if(!Controller.myDictionary.containsKey(addWord_word.getText())){
-            Controller.myDictionary.put(addWord_word.getText(),addWord_meaning.getText());
-            Controller.allWords.add(addWord_word.getText());
+        else if(!Controller.myDb.has(addWord_word.getText())){
+            Controller.myDb.addWord(addWord_word.getText(),addWord_meaning.getText());
+            Controller.allWords.clear();
+            Controller.allWords = Controller.myDb.getAllWords();
             show_mess(1);
         }
         else{

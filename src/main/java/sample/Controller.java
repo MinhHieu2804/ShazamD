@@ -38,8 +38,6 @@ public class Controller implements Initializable {
     @FXML
     ListView<String> history;
 
-    static Map<String, String> myDictionary;
-
     @FXML
     ListView<String> hint;
 
@@ -57,11 +55,9 @@ public class Controller implements Initializable {
         InitAll();
     }
 
-
     public void InitAll(){
-        myDb=new DbController();
         history.setVisible(false);
-        myDictionary = new HashMap<>();
+        myDb=new DbController();
         allWords =new ArrayList<>();
         my_hint=new Vector<>();
         allWords=myDb.getAllWords();
@@ -72,30 +68,32 @@ public class Controller implements Initializable {
         hide_history();
         WebEngine webEngine = meaning.getEngine();
         String w = searchWord.getText();
-        w = w.toLowerCase();
-        w = w.trim();
         if (!w.equals("")) {
-            if (!allWords.contains(w)) {
-                String t = "<html>NO WORD<br>add word to the dictionary if you want</html>";
-                webEngine.loadContent(t);
-            } else {
-                webEngine.loadContent(myDb.searchWord(w));
+            String tmp=myDb.searchWord(w.toUpperCase());
+            webEngine.loadContent(tmp);
+            if(!tmp.equals("<html>NO WORD<br>add word to the dictionary if you want</html>")){
                 history.getItems().remove(w);
                 history.getItems().add(0, w);
             }
         }
+        else{
+            String t="<html>Please enter word</html>";
+            webEngine.loadContent(t);
+        }
     }
 
     public void show_history(){
-        if(!history.getItems().isEmpty())
-        history.setVisible(true);
+        if(!history.getItems().isEmpty()){
+            history.setVisible(true);
+        }
+
     }
 
     public void hide_history(){
         history.setVisible(false);
         show_hint();
         if(searchWord.getText().equals("")){
-            history.setVisible(true);
+            show_history();
         }
     }
 
@@ -112,10 +110,11 @@ public class Controller implements Initializable {
     public void history_f(){
         WebEngine webEngine = meaning.getEngine();
         String w = history.getSelectionModel().getSelectedItem();
-        webEngine.loadContent(myDb.searchWord(w));
         searchWord.setText(w);
         history.getItems().remove(w);
         history.getItems().add(0, w);
+        w= myDb.searchWord(w.toUpperCase());
+        webEngine.loadContent(w);
         history.setVisible(false);
     }
 
@@ -123,13 +122,16 @@ public class Controller implements Initializable {
         WebEngine webEngine = meaning.getEngine();
         history.setVisible(false);
         String w = hint.getSelectionModel().getSelectedItem();
-        webEngine.loadContent(myDb.searchWord(w));
         searchWord.setText(w);
         history.getItems().remove(w);
         history.getItems().add(0, w);
+        w= myDb.searchWord(w);
+        webEngine.loadContent(w);
+
     }
 
     public void show_hint(){
+        hint.scrollTo(0);
         if(searchWord.getText().equals("")){
             hint.getItems().clear();
             hint.getItems().addAll(allWords);
@@ -138,17 +140,17 @@ public class Controller implements Initializable {
         int i=0;
         while(i<allWords.size()){
             String t=allWords.get(i);
-            if(t.startsWith(searchWord.getText()) || t.startsWith(searchWord.getText().toLowerCase().trim())){
+            if(t.startsWith(searchWord.getText())
+               || t.startsWith(searchWord.getText().toLowerCase())
+                || t.startsWith(searchWord.getText().toUpperCase())){
                 my_hint.add(t);
             }
             i++;
         }
-        my_hint.remove(DeleteWordSceneController.deleteW);
         hint.getItems().clear();
         hint.getItems().addAll(my_hint);
 
     }
-
 
     public void openAddWord() throws IOException {
         st = new Stage();
@@ -214,6 +216,5 @@ public class Controller implements Initializable {
         st.setScene(new Scene(root, 600, 400));
         st.show();
     }
-
 
 }

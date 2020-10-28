@@ -18,18 +18,24 @@ public class DeleteWordSceneController {
     private
     TextField deleteWord_word;
 
-    static String deleteW;
-
     @FXML
     void deleteWord() throws IOException {
-        String w=deleteWord_word.getText();
-        if(Controller.myDictionary.containsKey(w)){
-            Controller.myDictionary.remove(w);
-            Controller.allWords.remove(w);
-            show_mess(1);
-            deleteW=w;
+        String t=deleteWord_word.getText();
+        if(!t.equals("")){
+            if(Controller.myDb.has(t)){
+                Controller.myDb.deleteWord(t);
+                Controller.allWords.clear();
+                Controller.allWords=Controller.myDb.getAllWords();
+                show_mess(1);
+                Controller.my_hint.clear();
+                Controller.my_hint.addAll(Controller.allWords);
+            }
+            else show_mess(2);
         }
-        else show_mess(2);
+        else{
+            show_mess(3);
+        }
+
     }
 
     public void show_mess(int n){
@@ -39,6 +45,10 @@ public class DeleteWordSceneController {
             alert.setTitle("Failed");
             alert.setContentText("This word is not in the dictionary");
         }
+        else if(n==3){
+            alert.setTitle("Failed");
+            alert.setContentText("Please enter word");
+        }
         else{
             alert.setTitle("Done");
             alert.setContentText("Word deleted!");
@@ -47,6 +57,7 @@ public class DeleteWordSceneController {
     }
 
     public void back_f(){
+
         Controller.st.close();
     }
 
