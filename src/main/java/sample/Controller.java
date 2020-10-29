@@ -191,7 +191,7 @@ public class Controller implements Initializable {
         st.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("/AddWordScene.fxml"));
         st.setTitle("Add new word");
-        st.setScene(new Scene(root, 600, 400));
+        st.setScene(new Scene(root, 440, 400));
         st.show();
     }
 
@@ -200,7 +200,7 @@ public class Controller implements Initializable {
         st.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("/DeleteWordScene.fxml"));
         st.setTitle("Delete word");
-        st.setScene(new Scene(root, 600, 400));
+        st.setScene(new Scene(root, 440, 185));
         st.show();
     }
 
@@ -209,7 +209,7 @@ public class Controller implements Initializable {
         st.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("/ReWordScene.fxml"));
         st.setTitle("Replace word");
-        st.setScene(new Scene(root, 600, 400));
+        st.setScene(new Scene(root, 440, 400));
         st.show();
     }
 
@@ -218,7 +218,7 @@ public class Controller implements Initializable {
         st.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("/ApiScene.fxml"));
         st.setTitle("Google api");
-        st.setScene(new Scene(root, 600, 400));
+        st.setScene(new Scene(root, 600, 310));
         st.show();
     }
 

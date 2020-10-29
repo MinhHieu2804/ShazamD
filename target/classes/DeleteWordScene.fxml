@@ -3,13 +3,30 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.DeleteWordSceneController">
+<AnchorPane prefHeight="185.0" prefWidth="440.0" style="-fx-background-color: #b30000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.DeleteWordSceneController">
    <children>
-      <Text layoutX="100.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Word" />
-      <TextField fx:id="deleteWord_word" layoutX="160.0" layoutY="65.0" prefHeight="25.0" prefWidth="282.0" />
-      <Button layoutX="274.0" layoutY="116.0" mnemonicParsing="false" onMouseReleased="#deleteWord" text="Delete" />
-      <Button layoutX="23.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#back_f" text="BACK" />
+      <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="165.0" prefWidth="420.0" style="-fx-background-color: #ffffff;" />
+      <Text layoutX="20.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter a Word">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font></Text>
+      <TextField fx:id="deleteWord_word" layoutX="20.0" layoutY="100.0" prefHeight="30.0" prefWidth="400.0" style="-fx-background-radius: 0px;" />
+      <Button layoutX="190.0" layoutY="145.0" mnemonicParsing="false" onMouseReleased="#deleteWord" prefHeight="25.0" prefWidth="55.0" style="-fx-background-radius: 0px;" text="Delete">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></Button>
+      <Button layoutX="20.0" layoutY="145.0" mnemonicParsing="false" onMouseClicked="#back_f" prefHeight="25.0" prefWidth="55.0" style="-fx-background-radius: 0px;" text="Cancel">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></Button>
+      <Text fill="#ae4747" layoutX="100.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete a word" textAlignment="CENTER" wrappingWidth="235.591796875">
+         <font>
+            <Font name="Calibri" size="30.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
