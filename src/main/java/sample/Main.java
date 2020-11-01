@@ -15,6 +15,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/scene1.fxml"));
         primaryStage.setTitle("SHAZAM translator");
         primaryStage.setScene(new Scene(root, 900, 600));
+        primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.show();
     }
 

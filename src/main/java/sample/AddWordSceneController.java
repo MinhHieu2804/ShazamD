@@ -1,11 +1,9 @@
 package sample;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
@@ -15,7 +13,7 @@ public class AddWordSceneController {
     private TextField addWord_word;
 
     @FXML
-    private TextField addWord_meaning;
+    private TextArea addWord_meaning;
 
     @FXML
     public Button back;

@@ -37,22 +37,13 @@
         <ListView fx:id="history" layoutX="120.0" layoutY="80.0" onMouseClicked="#history_f" prefHeight="200.0" prefWidth="610.0" />
         <MenuBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="900.0" style="-fx-background-color: #ffffff;">
             <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                    </items>
-                </Menu>
+                <Menu mnemonicParsing="false" text="File" />
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#openAddWord" text="Add" />
                         <MenuItem mnemonicParsing="false" onAction="#openDeleteWord" text="Delete" />
                         <MenuItem mnemonicParsing="false" onAction="#openReplaceWord" text="Replace" />
                         <MenuItem mnemonicParsing="false" onAction="#openGoogleApi" text="Google translate" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
                     </items>
                 </Menu>
             </menus>

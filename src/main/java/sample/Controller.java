@@ -1,5 +1,7 @@
 package sample;
 
+
+import com.gtranslate.Language;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,14 +17,20 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.*;
 
 import javax.speech.Central;
 import javax.speech.synthesis.Synthesizer;
 import javax.speech.synthesis.SynthesizerModeDesc;
+import com.gtranslate.Audio;
+import javazoom.jl.decoder.JavaLayerException;
+
 
 public class Controller implements Initializable {
 
@@ -67,7 +75,7 @@ public class Controller implements Initializable {
     public void search_Word(){
         hide_history();
         WebEngine webEngine = meaning.getEngine();
-        String w = searchWord.getText();
+        String w = searchWord.getText().trim();
         if (!w.equals("")) {
             String tmp=myDb.searchWord(w);
             webEngine.loadContent(tmp);
@@ -137,12 +145,12 @@ public class Controller implements Initializable {
 
     public void show_hint(){
         hint.scrollTo(0);
-        if(searchWord.getText().equals("")){
+        if(searchWord.getText().trim().equals("")){
             hint.getItems().clear();
             hint.getItems().addAll(allWords);
         }
         my_hint=new ArrayList<>();
-        String t=searchWord.getText().toUpperCase();
+        String t=searchWord.getText().trim().toUpperCase();
         my_hint=myDb.gethint(t+"%");
         if(my_hint.isEmpty()){
             String w=searchWord.getText().toUpperCase();
@@ -157,7 +165,21 @@ public class Controller implements Initializable {
             hint.getItems().addAll(my_hint);
     }
 
-    public void speak_word() throws Exception {
+    public boolean network(){
+        try{
+            final URL url= new URL("https://www.google.com");
+            final URLConnection conn =url.openConnection();
+            conn.connect();
+            conn.getInputStream().close();
+            return true;
+        }catch (MalformedURLException e){
+            throw new RuntimeException(e);
+        }catch (IOException e){
+            return false;
+        }
+    }
+
+    public void speak_word2() throws Exception {
         try {
             System.setProperty(
                     "freetts.voices",
@@ -186,12 +208,29 @@ public class Controller implements Initializable {
         }
     }
 
+    public  void speak_word() throws Exception {
+        if(network()){
+            try {
+                Audio audio = Audio.getInstance();
+                InputStream sound = audio.getAudio( searchWord.getText()+ "&client=tw-ob", Language.ENGLISH);
+                audio.play(sound);
+            } catch (IOException | JavaLayerException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        else {
+            speak_word2();
+        }
+
+    }
+
     public void openAddWord() throws IOException {
         st = new Stage();
         st.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(getClass().getResource("/AddWordScene.fxml"));
         st.setTitle("Add new word");
         st.setScene(new Scene(root, 440, 400));
+        st.resizableProperty().setValue(Boolean.FALSE);
         st.show();
     }
 
@@ -201,6 +240,7 @@ public class Controller implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/DeleteWordScene.fxml"));
         st.setTitle("Delete word");
         st.setScene(new Scene(root, 440, 185));
+        st.resizableProperty().setValue(Boolean.FALSE);
         st.show();
     }
 
@@ -210,6 +250,7 @@ public class Controller implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/ReWordScene.fxml"));
         st.setTitle("Replace word");
         st.setScene(new Scene(root, 440, 400));
+        st.resizableProperty().setValue(Boolean.FALSE);
         st.show();
     }
 
@@ -219,6 +260,7 @@ public class Controller implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/ApiScene.fxml"));
         st.setTitle("Google api");
         st.setScene(new Scene(root, 600, 310));
+        st.resizableProperty().setValue(Boolean.FALSE);
         st.show();
     }
 

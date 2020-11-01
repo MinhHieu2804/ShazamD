@@ -3,15 +3,15 @@ package sample;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 
-import java.awt.*;
 
 public class ReWordController {
     @FXML
     private javafx.scene.control.TextField word;
 
     @FXML
-    private javafx.scene.control.TextField meaning;
+    private TextArea meaning;
 
     @FXML
     public Button back;
